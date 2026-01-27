@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>SLCC養老社區會員APP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang TC", "Microsoft JhengHei", sans-serif;
+            background: #f5f5f7;
+            overflow-x: hidden;
+            padding-bottom: 70px;
+        }
+
+        /* 顶部导航栏 */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            color: white;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .top-nav h1 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .notification-icon {
+            position: relative;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff3b30;
+            color: white;
+            border-radius: 10px;
+            padding: 2px 6px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        /* 主内容区 */
+        .main-content {
+            margin-top: 60px;
+            padding: 15px;
+        }
+
+        /* 问候卡片 */
+        .greeting-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 25px;
+            color: white;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .greeting-card h2 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .member-info {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .member-level {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        /* 快捷服务网格 - 第一排4个按钮 */
+        .quick-nav {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .quick-nav-item {
+            background: white;
+            border-radius: 15px;
+            padding: 20px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .quick-nav-item:active {
+            transform: scale(0.95);
+        }
+
+        .quick-nav-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .quick-nav-text {
+            font-size: 13px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        /* 提醒卡片 */
+        .reminder-section {
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 18px;
+            background: #667eea;
+            margin-right: 10px;
+            border-radius: 2px;
+        }
+
+        .reminder-card {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            cursor: pointer;
+        }
+
+        .reminder-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+
+        .reminder-content {
+            flex: 1;
+        }
+
+        .reminder-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .reminder-time {
+            font-size: 13px;
+            color: #999;
+        }
+
+        /* 服务分类卡片 */
+        .service-section {
+            margin-bottom: 20px;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .service-card:active {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .service-icon {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .service-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .service-desc {
+            font-size: 12px;
+            color: #999;
+        }
+
+        /* 底部导航栏 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 65px;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 1px solid #e0e0e0;
+            padding-bottom: env(safe-area-inset-bottom);
+            z-index: 100;
+        }
+
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            cursor: pointer;
+            padding: 8px 0;
+        }
+
+        .nav-item.active {
+            color: #667eea;
+        }
+
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .nav-text {
+            font-size: 11px;
+        }
+
+        /* 弹窗样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            animation: fadeIn 0.3s;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s;
+            padding-bottom: 20px;
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 1;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .close-btn {
+            font-size: 28px;
+            cursor: pointer;
+            color: #999;
+            line-height: 1;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .detail-item {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .detail-item:active {
+            background: #f8f8f8;
+        }
+
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .detail-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .detail-desc {
+            font-size: 13px;
+            color: #666;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* 活动列表 */
+        .activity-list {
+            margin-bottom: 20px;
+        }
+
+        .activity-item {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+        }
+
+        .activity-date {
+            width: 60px;
+            text-align: center;
+            margin-right: 15px;
+        }
+
+        .activity-day {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .activity-month {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .activity-info {
+            flex: 1;
+        }
+
+        .activity-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .activity-time {
+            font-size: 13px;
+            color: #999;
+        }
+
+        .activity-status {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            background: #e8f5e9;
+            color: #4caf50;
+        }
+
+        /* 统计卡片 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #999;
+        }
+
+        /* 个人中心列表 */
+        .profile-list {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .profile-item {
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .profile-item:last-child {
+            border-bottom: none;
+        }
+
+        .profile-item:active {
+            background: #f8f8f8;
+        }
+
+        .profile-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-icon {
+            font-size: 22px;
+            margin-right: 15px;
+            width: 30px;
+        }
+
+        .profile-text {
+            font-size: 15px;
+            color: #333;
+        }
+
+        .profile-arrow {
+            color: #ccc;
+            font-size: 18px;
+        }
+
+        /* 隐藏的页面 */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* 健康数据卡片 */
+        .health-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .health-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .health-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .health-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .health-unit {
+            font-size: 14px;
+            color: #999;
+            margin-left: 5px;
+        }
+
+        .health-status {
+            font-size: 13px;
+            color: #4caf50;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <div class="top-nav">
+        <h1>SLCC養老社區</h1>
+        <div class="notification-icon" onclick="showNotifications()">
+            🔔
+            <span class="badge">3</span>
+        </div>
+    </div>
+
+    <!-- 首页 -->
+    <div id="homePage" class="page active">
+        <div class="main-content">
+            <!-- 问候卡片 -->
+            <div class="greeting-card">
+                <h2>尊敬的貴賓會員，您好！</h2>
+                <div class="member-info">
+                    <div>會員編號：SLCC2024001</div>
+                    <div>入住時間：2023年3月</div>
+                    <span class="member-level">💎 鑽石會員</span>
+                </div>
+            </div>
+
+            <!-- 快捷导航 - 第一排4个主要按钮 -->
+            <div class="quick-nav">
+                <div class="quick-nav-item" onclick="switchPage('home')">
+                    <div class="quick-nav-icon">🏠</div>
+                    <div class="quick-nav-text">首頁</div>
+                </div>
+                <div class="quick-nav-item" onclick="switchPage('activity')">
+                    <div class="quick-nav-icon">🎯</div>
+                    <div class="quick-nav-text">活動</div>
+                </div>
+                <div class="quick-nav-item" onclick="switchPage('health')">
+                    <div class="quick-nav-icon">💚</div>
+                    <div class="quick-nav-text">健康</div>
+                </div>
+                <div class="quick-nav-item" onclick="switchPage('profile')">
+                    <div class="quick-nav-icon">👤</div>
+                    <div class="quick-nav-text">我的</div>
+                </div>
+            </div>
+
+            <!-- 今日提醒 -->
+            <div class="reminder-section">
+                <div class="section-title">今日提醒</div>
+                <div class="reminder-card" onclick="showDetail('medication')">
+                    <div class="reminder-icon">💊</div>
+                    <div class="reminder-content">
+                        <div class="reminder-title">服藥提醒</div>
+                        <div class="reminder-time">上午 09:00 - 降壓藥</div>
+                    </div>
+                </div>
+                <div class="reminder-card" onclick="showDetail('activity')">
+                    <div class="reminder-icon">🎨</div>
+                    <div class="reminder-content">
+                        <div class="reminder-title">活動提醒</div>
+                        <div class="reminder-time">下午 14:00 - 書法課程</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 服务分类 -->
+            <div class="service-section">
+                <div class="section-title">服務中心</div>
+                <div class="service-grid">
+                    <div class="service-card" onclick="showDetail('medical')">
+                        <div class="service-icon">🏥</div>
+                        <div class="service-title">醫療預約</div>
+                        <div class="service-desc">門診掛號、體檢預約</div>
+                    </div>
+                    <div class="service-card" onclick="showDetail('nursing')">
+                        <div class="service-icon">🩺</div>
+                        <div class="service-title">護理服務</div>
+                        <div class="service-desc">居家護理、生活照護</div>
+                    </div>
+                    <div class="service-card" onclick="showDetail('therapy')">
+                        <div class="service-icon">💆</div>
+                        <div class="service-title">康復理療</div>
+                        <div class="service-desc">物理治療、中醫推拿</div>
+                    </div>
+                    <div class="service-card" onclick="showDetail('account')">
+                        <div class="service-icon">💳</div>
+                        <div class="service-title">帳戶管理</div>
+                        <div class="service-desc">費用查詢、繳費記錄</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 活动页面 -->
+    <div id="activityPage" class="page">
+        <div class="main-content">
+            <div class="section-title">活動報名</div>
+            
+            <div class="activity-list">
+                <div class="activity-item" onclick="showDetail('travel')">
+                    <div class="activity-date">
+                        <div class="activity-day">28</div>
+                        <div class="activity-month">1月</div>
+                    </div>
+                    <div class="activity-info">
+                        <div class="activity-name">🌊 陽明山溫泉一日遊</div>
+                        <div class="activity-time">09:00 - 17:00</div>
+                    </div>
+                    <div class="activity-status">可報名</div>
+                </div>
+
+                <div class="activity-item" onclick="showDetail('music')">
+                    <div class="activity-date">
+                        <div class="activity-day">30</div>
+                        <div class="activity-month">1月</div>
+                    </div>
+                    <div class="activity-info">
+                        <div class="activity-name">🎵 古典音樂欣賞會</div>
+                        <div class="activity-time">14:00 - 16:00</div>
+                    </div>
+                    <div class="activity-status">可報名</div>
+                </div>
+
+                <div class="activity-item" onclick="showDetail('taichi')">
+                    <div class="activity-date">
+                        <div class="activity-day">每週</div>
+                        <div class="activity-month">一三五</div>
+                    </div>
+                    <div class="activity-info">
+                        <div class="activity-name">🥋 太極拳課程</div>
+                        <div class="activity-time">07:00 - 08:00</div>
+                    </div>
+                    <div class="activity-status">已報名</div>
+                </div>
+
+                <div class="activity-item" onclick="showDetail('yoga')">
+                    <div class="activity-date">
+                        <div class="activity-day">每週</div>
+                        <div class="activity-month">二四</div>
+                    </div>
+                    <div class="activity-info">
+                        <div class="activity-name">🧘 瑜伽課程</div>
+                        <div class="activity-time">08:30 - 09:30</div>
+                    </div>
+                    <div class="activity-status">可報名</div>
+                </div>
+
+                <div class="activity-item" onclick="showDetail('tea')">
+                    <div class="activity-date">
+                        <div class="activity-day">02</div>
+                        <div class="activity-month">2月</div>
+                    </div>
+                    <div class="activity-info">
+                        <div class="activity-name">🍵 週末茶話會</div>
+                        <div class="activity-time">15:00 - 17:00</div>
+                    </div>
+                    <div class="activity-status">可報名</div>
+                </div>
+            </div>
+
+            <div class="section-title" style="margin-top: 30px;">行事曆</div>
+            <div class="service-card" onclick="showDetail('calendar')" style="margin-bottom: 15px;">
+                <div class="service-icon">📅</div>
+                <div class="service-title">查看完整行事曆</div>
+                <div class="service-desc">旅遊、文娛、理療安排一目了然</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 健康页面 -->
+    <div id="healthPage" class="page">
+        <div class="main-content">
+            <div class="section-title">健康監測</div>
+            
+            <div class="health-card">
+                <div class="health-header">
+                    <div class="health-title">❤️ 心率</div>
+                    <div>
+                        <span class="health-value">72</span>
+                        <span class="health-unit">bpm</span>
+                    </div>
+                </div>
+                <div class="health-status">✓ 正常範圍</div>
+            </div>
+
+            <div class="health-card">
+                <div class="health-header">
+                    <div class="health-title">🩸 血氧</div>
+                    <div>
+                        <span class="health-value">98</span>
+                        <span class="health-unit">%</span>
+                    </div>
+                </div>
+                <div class="health-status">✓ 正常範圍</div>
+            </div>
+
+            <div class="health-card">
+                <div class="health-header">
+                    <div class="health-title">🚶 步數</div>
+                    <div>
+                        <span class="health-value">6,543</span>
+                        <span class="health-unit">步</span>
+                    </div>
+                </div>
+                <div class="health-status">已達成今日目標 80%</div>
+            </div>
+
+            <div class="health-card">
+                <div class="health-header">
+                    <div class="health-title">😴 睡眠</div>
+                    <div>
+                        <span class="health-value">7.5</span>
+                        <span class="health-unit">小時</span>
+                    </div>
+                </div>
+                <div class="health-status">✓ 睡眠質量良好</div>
+            </div>
+
+            <div class="section-title" style="margin-top: 30px;">健康服務</div>
+            <div class="service-grid">
+                <div class="service-card" onclick="showDetail('device')">
+                    <div class="service-icon">⌚</div>
+                    <div class="service-title">穿戴設備</div>
+                    <div class="service-desc">設備管理、數據同步</div>
+                </div>
+                <div class="service-card" onclick="showDetail('record')">
+                    <div class="service-icon">📋</div>
+                    <div class="service-title">健康檔案</div>
+                    <div class="service-desc">病歷、用藥記錄</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 我的页面 -->
+    <div id="profilePage" class="page">
+        <div class="main-content">
+            <!-- 会员信息卡片 -->
+            <div class="greeting-card">
+                <h2>張美玲 女士</h2>
+                <div class="member-info">
+                    <div>會員編號：SLCC2024001</div>
+                    <div>入住時間：2023年3月15日</div>
+                    <span class="member-level">💎 鑽石會員</span>
+                </div>
+            </div>
+
+            <!-- 统计数据 -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">1,280</div>
+                    <div class="stat-label">積分</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">23</div>
+                    <div class="stat-label">活動參與</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">45</div>
+                    <div class="stat-label">服務次數</div>
+                </div>
+            </div>
+
+            <!-- 功能列表 -->
+            <div class="profile-list">
+                <div class="profile-item" onclick="showDetail('memberInfo')">
+                    <div class="profile-left">
+                        <div class="profile-icon">👤</div>
+                        <div class="profile-text">個人資訊</div>
+                    </div>
+                    <div class="profile-arrow">›</div>
+                </div>
+                <div class="profile-item" onclick="showDetail('memberLevel')">
+                    <div class="profile-left">
+                        <div class="profile-icon">💎</div>
+                        <div class="profile-text">會員等級與權益</div>
+                    </div>
+                    <div class="profile-arrow">›</div>
+                </div>
+                <div class="profile-item" onclick="showDetail('finance')">
+                    <div class="profile-left">
+                        <div class="profile-icon">💰</div>
+                        <div class="profile-text">費用統計</div>
+                    </div>
+                    <div class="profile-arrow">›</div>
+                </div>
+            </div>
+
+            <div class="profile-list">
+                <div class="profile-item" onclick="showDetail('butler')">
+                    <div class="profile-left">
+                        <div class="profile-icon">🤵</div>
+                        <div class="profile-text">專屬管家</div>
+                    </div>
+                    <div class="profile-arrow">›</div>
+                </div>
+                <div class="profile-item" onclick="showDetail('emergency')">
+                    <div class="profile-left">
+                        <div class="profile-icon">🚨</div>
+                        <div class="profile-text">緊急聯絡人</div>
+                    </div>
+                    <div class="profile-arrow">›</div>
+                </div>
+                <div class="profile-item" onclick="showDetail('settings')">
+                    <div class="profile-left">
+                        <div class="profile-icon">⚙️</div>
+                        <div class="profile-text">設置</div>
+                    </div>
+                    <div class="profile-arrow">›</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部导航 -->
+    <div class="bottom-nav">
+        <div class="nav-item active" onclick="switchPage('home')">
+            <div class="nav-icon">🏠</div>
+            <div class="nav-text">首頁</div>
+        </div>
+        <div class="nav-item" onclick="switchPage('activity')">
+            <div class="nav-icon">🎯</div>
+            <div class="nav-text">活動</div>
+        </div>
+        <div class="nav-item" onclick="switchPage('health')">
+            <div class="nav-icon">💚</div>
+            <div class="nav-text">健康</div>
+        </div>
+        <div class="nav-item" onclick="switchPage('profile')">
+            <div class="nav-icon">👤</div>
+            <div class="nav-text">我的</div>
+        </div>
+    </div>
+
+    <!-- 通用弹窗 -->
+    <div id="modal" class="modal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <div class="modal-title" id="modalTitle">詳情</div>
+                <div class="close-btn" onclick="closeModal()">&times;</div>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 页面切换
+        function switchPage(pageName) {
+            // 隐藏所有页面
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // 显示选中页面
+            document.getElementById(pageName + 'Page').classList.add('active');
+            
+            // 更新底部导航状态
+            document.querySelectorAll('.nav-item').forEach((item, index) => {
+                item.classList.remove('active');
+            });
+            
+            const navItems = document.querySelectorAll('.nav-item');
+            const pageIndex = {home: 0, activity: 1, health: 2, profile: 3};
+            navItems[pageIndex[pageName]].classList.add('active');
+        }
+
+        // 显示详情弹窗
+        function showDetail(type) {
+            const modal = document.getElementById('modal');
+            const title = document.getElementById('modalTitle');
+            const body = document.getElementById('modalBody');
+            
+            const details = {
+                medication: {
+                    title: '服藥提醒',
+                    content: `
+                        <div class="detail-item">
+                            <div class="detail-title">💊 降壓藥</div>
+                            <div class="detail-desc">每日 09:00、21:00<br>飯後服用，溫水送服</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">💊 血糖藥</div>
+                            <div class="detail-desc">每日 08:00<br>早餐前服用</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">💊 維生素D</div>
+                            <div class="detail-desc">每日 12:00<br>午餐後服用</div>
+                        </div>
+                    `
+                },
+                activity: {
+                    title: '活動提醒',
+                    content: `
+                        <div class="detail-item">
+                            <div class="detail-title">🎨 書法課程</div>
+                            <div class="detail-desc">時間：今日 14:00-16:00<br>地點：文化活動中心 201室<br>導師：王老師</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">📝 報名狀態</div>
+                            <div class="detail-desc">已報名確認<br>課程材料已準備</div>
+                        </div>
+                    `
+                },
+                medical: {
+                    title: '醫療預約',
+                    content: `
+                        <div class="detail-item">
+                            <div class="detail-title">🏥 門診掛號</div>
+                            <div class="detail-desc">預約各科門診，專業醫師服務</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">💬 健康諮詢</div>
+                            <div class="detail-desc">24小時在線健康諮詢服務</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">🔬 體檢預約</div>
+                            <div class="detail-desc">定期體檢，健康管理</div>
+                        </div>
+                    `
+                },
+                nursing: {
+                    title: '護理服務',
+                    content: `
+                        <div class="detail-item">
+                            <div class="detail-title">🏠 居家護理</div>
+                            <div class="detail-desc">專業護理師上門服務</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">🚑 陪診服務</div>
+                            <div class="detail-desc">專人陪同就醫，安心放心</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">👨‍⚕️ 生活照護</div>
+                            <div class="detail-desc">日常生活協助與照顧</div>
+                        </div>
+                    `
+                },
+                therapy: {
+                    title: '康復理療',
+                    content: `
+                        <div class="detail-item">
+                            <div class="detail-title">🏃 物理治療</div>
+                            <div class="detail-desc">專業物理治療師，康復訓練</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">🌿 中醫推拿</div>
+                            <div class="detail-desc">傳統中醫推拿，舒緩疲勞</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">💉 針灸按摩</div>
+                            <div class="detail-desc">專業針灸，調理身體</div>
+                        </div>
+                    `
+                },
+                account: {
+                    title: '帳戶管理',
+                    content: `
+                        <div class="detail-item">
+                            <div class="detail-title">💰 本月費用</div>
+                            <div class="detail-desc">NT$ 45,800<br>已繳清</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">📊 費用明細</div>
+                            <div class="detail-desc">住宿費、餐飲費、服務費詳細記錄</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">🔄 自動扣款</div>
+                            <div class="detail-desc">已開啟，每月1日自動扣款</div>
+                        </div>
+                    `
+                },
+                travel: {
+                    title: '陽明山溫泉一日遊',
+                    content: `
+                        <div class="detail-item">
+                            <div class="detail-title">📅 活動日期</div>
+                            <div class="detail-desc">2026年1月28日（週三）</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">⏰ 活動時間</div>
+                            <div class="detail-desc">09:00 出發 - 17:00 返回</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">📍 活動內容</div>
+                            <div class="detail-desc">陽明山溫泉體驗、風景區遊覽、溫泉午餐<br>專車接送，專人陪同</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">👥 報名狀態</div>
+                            <div class="detail-desc">已報名 15/20人<br>點擊可報名</div>
+                        </div>
+                    `
+                },
+                device: {
+                    title: '穿戴設備管理',
+                    content: `
+                        <div class="detail-item">
+                            <div class="detail-title">⌚ 智能手環</div>
+                            <div class="detail-desc">已連接<br>電量：85%<br>最後同步：5分鐘前</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">📊 數據同步</div>
+                            <div class="detail-desc">心率、血氧、步數、睡眠數據<br>自動同步中</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">🚨 緊急呼叫</div>
+                            <div class="detail-desc">長按設備按鈕3秒即可呼叫<br>24小時緊急響應</div>
+                        </div>
+                    `
+                },
+                record: {
+                    title: '健康檔案',
+                    content: `
+                        <div class="detail-item">
+                            <div class="detail-title">📋 病歷記錄</div>
+                            <div class="detail-desc">完整病歷，隨時查閱</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">💊 用藥管理</div>
+                            <div class="detail-desc">當前用藥3種，服藥提醒已開啟</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">🔬 體檢報告</div>
+                            <div class="detail-desc">最近體檢：2025年12月15日<br>下次體檢：2026年6月</div>
+                        </div>
+                    `
+                },
+                memberInfo: {
+                    title: '個人資訊',
+                    content: `
+                        <div class="detail-item">
+                            <div class="detail-title">👤 基本信息</div>
+                            <div class="detail-desc">姓名：張美玲<br>性別：女<br>年齡：68歲<br>身份證號：A1********</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">🏠 居住信息</div>
+                            <div class="detail-desc">房號：A棟 301室<br>入住時間：2023年3月15日</div>
+                        </div>
+                    `
+                },
+                memberLevel: {
+                    title: '會員等級與權益',
+                    content: `
+                        <div class="detail-item">
+                            <div class="detail-title">💎 當前等級</div>
+                            <div class="detail-desc">鑽石會員<br>積分：1,280分</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">✨ 專屬權益</div>
+                            <div class="detail-desc">• 優先預約醫療服務<br>• 活動報名優先權<br>• 專屬管家服務<br>• 免費健康體檢2次/年<br>• 活動折扣95折</div>
+                        </div>
+                    `
+                },
+                finance: {
+                    title: '費用統計',
+                    content: `
+                        <div class="detail-item">
+                            <div class="detail-title">💰 本月費用</div>
+                            <div class="detail-desc">總計：NT$ 45,800<br>狀態：已繳清</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">📊 費用明細</div>
+                            <div class="detail-desc">住宿費：NT$ 28,000<br>餐飲費：NT$ 12,000<br>醫療服務：NT$ 3,800<br>其他服務：NT$ 2,000</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">🔄 繳費方式</div>
+                            <div class="detail-desc">自動扣款：已開啟<br>扣款日期：每月1日</div>
+                        </div>
+                    `
+                },
+                butler: {
+                    title: '專屬管家',
+                    content: `
+                        <div class="detail-item">
+                            <div class="detail-title">🤵 王芳管家</div>
+                            <div class="detail-desc">服務時間：08:00-20:00<br>電話：0912-345-678<br>微信：SLCC_Butler_Wang</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">📞 快速聯絡</div>
+                            <div class="detail-desc">點擊撥打電話<br>點擊發送訊息</div>
+                        </div>
+                    `
+                },
+                emergency: {
+                    title: '緊急聯絡人',
+                    content: `
+                        <div class="detail-item">
+                            <div class="detail-title">👨‍👩‍👧 聯絡人1</div>
+                            <div class="detail-desc">姓名：張小明（兒子）<br>電話：0912-111-222<br>關係：子女</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">👨‍👩‍👧 聯絡人2</div>
+                            <div class="detail-desc">姓名：李小華（女兒）<br>電話：0912-333-444<br>關係：子女</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">➕ 添加聯絡人</div>
+                            <div class="detail-desc">點擊添加更多緊急聯絡人</div>
+                        </div>
+                    `
+                },
+                calendar: {
+                    title: '行事曆',
+                    content: `
+                        <div class="detail-item">
+                            <div class="detail-title">📅 本週活動</div>
+                            <div class="detail-desc">週一、三、五：太極拳 07:00<br>週二、四：瑜伽課 08:30<br>週四：書法課 14:00</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">💊 用藥提醒</div>
+                            <div class="detail-desc">每日 08:00、09:00、12:00、21:00</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">💆 理療安排</div>
+                            <div class="detail-desc">週三 10:00：中醫推拿<br>週五 15:00：物理治療</div>
+                        </div>
+                    `
+                },
+                music: {
+                    title: '古典音樂欣賞會',
+                    content: `
+                        <div class="detail-item">
+                            <div class="detail-title">🎵 活動詳情</div>
+                            <div class="detail-desc">日期：1月30日 週四<br>時間：14:00-16:00<br>地點：多功能廳</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">🎼 演出曲目</div>
+                            <div class="detail-desc">貝多芬《月光奏鳴曲》<br>莫扎特《土耳其進行曲》<br>肖邦《夜曲》</div>
+                        </div>
+                    `
+                },
+                taichi: {
+                    title: '太極拳課程',
+                    content: `
+                        <div class="detail-item">
+                            <div class="detail-title">🥋 課程信息</div>
+                            <div class="detail-desc">時間：每週一、三、五 07:00-08:00<br>地點：戶外活動區<br>教練：李師傅</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">✅ 報名狀態</div>
+                            <div class="detail-desc">已報名<br>下次課程：明日 07:00</div>
+                        </div>
+                    `
+                },
+                yoga: {
+                    title: '瑜伽課程',
+                    content: `
+                        <div class="detail-item">
+                            <div class="detail-title">🧘 課程信息</div>
+                            <div class="detail-desc">時間：每週二、四 08:30-09:30<br>地點：健身房<br>教練：林老師</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">📝 課程特色</div>
+                            <div class="detail-desc">專為銀髮族設計的溫和瑜伽<br>改善柔韌性和平衡感</div>
+                        </div>
+                    `
+                },
+                tea: {
+                    title: '週末茶話會',
+                    content: `
+                        <div class="detail-item">
+                            <div class="detail-title">🍵 活動詳情</div>
+                            <div class="detail-desc">日期：2月2日 週日<br>時間：15:00-17:00<br>地點：茶藝室</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">☕ 活動內容</div>
+                            <div class="detail-desc">品茗、聊天、交友<br>精緻茶點供應<br>茶藝師現場表演</div>
+                        </div>
+                    `
+                },
+                settings: {
+                    title: '設置',
+                    content: `
+                        <div class="detail-item">
+                            <div class="detail-title">🔔 通知設置</div>
+                            <div class="detail-desc">服藥提醒、活動提醒、系統通知</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">🔐 隱私設置</div>
+                            <div class="detail-desc">數據共享、權限管理</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-title">ℹ️ 關於我們</div>
+                            <div class="detail-desc">版本信息、服務條款、聯絡我們</div>
+                        </div>
+                    `
+                }
+            };
+            
+            const detail = details[type] || {title: '詳情', content: '<div class="detail-item"><div class="detail-desc">暫無詳細信息</div></div>'};
+            
+            title.textContent = detail.title;
+            body.innerHTML = detail.content;
+            modal.classList.add('active');
+        }
+
+        // 关闭弹窗
+        function closeModal(event) {
+            if (!event || event.target.id === 'modal') {
+                document.getElementById('modal').classList.remove('active');
+            }
+        }
+
+        // 显示通知
+        function showNotifications() {
+            showDetail('notifications');
+            const body = document.getElementById('modalBody');
+            const title = document.getElementById('modalTitle');
+            title.textContent = '通知中心';
+            body.innerHTML = `
+                <div class="detail-item">
+                    <div class="detail-title">💊 服藥提醒</div>
+                    <div class="detail-desc">9:00 該服用降壓藥了<br>5分鐘前</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-title">🎨 活動提醒</div>
+                    <div class="detail-desc">今日14:00 書法課程即將開始<br>1小時前</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-title">📅 新活動發布</div>
+                    <div class="detail-desc">陽明山溫泉一日遊開放報名<br>2小時前</div>
+                </div>
+            `;
+        }
+
+        // 防止页面滚动穿透
+        document.getElementById('modal').addEventListener('touchmove', function(e) {
+            if (e.target === this) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+    </script>
+</body>
+</html>
