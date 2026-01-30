@@ -5,15 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="SLLCC">
-    <meta name="theme-color" content="#8B7355">
-    <title>SLLCC 養老社區會員服務</title>
+    <meta name="apple-mobile-web-app-title" content="SLCC">
+    <title>SLCC 養老社區會員服務</title>
     
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icon-192.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="icon-152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
-    <link rel="apple-touch-icon" sizes="167x167" href="icon-167.png">
+    <link rel="manifest" href="/slcc/manifest.json">
+    <link rel="apple-touch-icon" href="/slcc/icon-180.png">
     
     <style>
         * {
@@ -23,204 +19,326 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'PingFang TC', 'Microsoft JhengHei', sans-serif;
-            background: #f5f5f5;
-            padding-bottom: 70px;
-            overflow-x: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #8B7355 0%, #A0826D 100%);
-            color: white;
-            padding: 20px 20px 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .greeting {
-            font-size: 18px;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-        
-        .member-info {
-            font-size: 14px;
-            opacity: 0.95;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .notification-badge {
-            background: #FF6B6B;
-            color: white;
-            border-radius: 12px;
-            padding: 2px 8px;
-            font-size: 12px;
-            margin-left: 10px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            padding-bottom: 80px;
         }
         
         .container {
-            max-width: 428px;
+            max-width: 480px;
             margin: 0 auto;
-            padding: 15px;
         }
         
-        .reminder-card {
+        .header {
             background: white;
-            border-radius: 12px;
-            padding: 15px;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .greeting {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .user-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        .user-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .member-badge {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .notification-badge {
+            background: #ff4444;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        
+        .today-reminders {
+            background: #f8f9ff;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
         }
         
         .reminder-title {
-            font-size: 15px;
-            font-weight: 600;
+            font-size: 14px;
+            font-weight: bold;
             color: #333;
             margin-bottom: 10px;
-            display: flex;
-            align-items: center;
         }
         
         .reminder-item {
-            background: #FFF9F0;
-            border-left: 3px solid #FFB84D;
-            padding: 10px;
-            margin: 8px 0;
-            border-radius: 4px;
-            font-size: 14px;
+            padding: 8px 0;
+            font-size: 13px;
+            color: #666;
+            border-bottom: 1px solid #e0e0e0;
         }
         
-        .quick-service {
-            background: white;
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        .reminder-item:last-child {
+            border-bottom: none;
         }
         
-        .section-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .service-grid {
+        .quick-actions {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 15px;
+            margin-bottom: 20px;
         }
         
-        .service-item {
+        .quick-action {
+            background: white;
+            border-radius: 15px;
+            padding: 20px 10px;
             text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             cursor: pointer;
             transition: transform 0.2s;
         }
         
-        .service-item:active {
+        .quick-action:active {
             transform: scale(0.95);
         }
         
-        .service-icon {
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, #8B7355 0%, #A0826D 100%);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            margin: 0 auto 8px;
-            box-shadow: 0 4px 12px rgba(139,115,85,0.2);
+        .action-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
         }
         
-        .service-name {
-            font-size: 13px;
-            color: #333;
+        .action-label {
+            font-size: 12px;
+            color: #666;
         }
         
         .stats-card {
             background: white;
-            border-radius: 12px;
-            padding: 15px;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .stats-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
             margin-bottom: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
         
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-top: 10px;
+            gap: 15px;
         }
         
         .stat-item {
             text-align: center;
-            padding: 12px;
-            background: linear-gradient(135deg, #F8F4F0 0%, #FFF9F5 100%);
-            border-radius: 8px;
         }
         
-        .stat-number {
-            font-size: 22px;
+        .stat-value {
+            font-size: 24px;
             font-weight: bold;
-            color: #8B7355;
-            margin-bottom: 4px;
+            color: #667eea;
+            margin-bottom: 5px;
         }
         
         .stat-label {
             font-size: 12px;
-            color: #666;
+            color: #999;
         }
         
-        .tab-bar {
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .service-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .service-card:active {
+            transform: scale(0.95);
+        }
+        
+        .service-icon {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        
+        .service-name {
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .service-desc {
+            font-size: 11px;
+            color: #999;
+        }
+        
+        .health-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 20px;
+            padding: 25px;
+            color: white;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .health-title {
+            font-size: 16px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .battery {
+            margin-left: auto;
+            font-size: 14px;
+        }
+        
+        .health-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .metric {
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .metric-label {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+        
+        .emergency-button {
+            background: #ff4444;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            width: 100%;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(255, 68, 68, 0.3);
+            cursor: pointer;
+        }
+        
+        .emergency-button:active {
+            transform: scale(0.98);
+        }
+        
+        .schedule-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .schedule-item {
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 15px;
+            background: #f8f9ff;
+            border-radius: 8px;
+        }
+        
+        .schedule-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .schedule-date {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 5px;
+        }
+        
+        .schedule-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .bottom-nav {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            max-width: 428px;
-            margin: 0 auto;
             background: white;
             display: flex;
             justify-content: space-around;
-            padding: 8px 0 6px;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
-            border-top: 1px solid #e0e0e0;
+            padding: 10px 0;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
         }
         
-        .tab-item {
-            flex: 1;
-            text-align: center;
-            padding: 4px;
-            cursor: pointer;
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             color: #999;
-            transition: color 0.3s;
+            cursor: pointer;
+            padding: 5px 15px;
         }
         
-        .tab-item.active {
-            color: #8B7355;
+        .nav-item.active {
+            color: #667eea;
         }
         
-        .tab-icon {
+        .nav-icon {
             font-size: 24px;
-            margin-bottom: 2px;
+            margin-bottom: 5px;
         }
         
-        .tab-label {
+        .nav-label {
             font-size: 11px;
         }
         
-        .hidden {
-            display: none !important;
-        }
-        
-        /* 彈窗樣式 */
         .modal {
             display: none;
             position: fixed;
@@ -232,884 +350,876 @@
             z-index: 1000;
             align-items: center;
             justify-content: center;
+            padding: 20px;
         }
         
-        .modal.show {
+        .modal.active {
             display: flex;
         }
         
         .modal-content {
             background: white;
-            border-radius: 16px;
-            width: 90%;
-            max-width: 380px;
+            border-radius: 20px;
+            padding: 25px;
+            max-width: 400px;
+            width: 100%;
             max-height: 80vh;
             overflow-y: auto;
-            animation: slideUp 0.3s ease;
-        }
-        
-        @keyframes slideUp {
-            from {
-                transform: translateY(100px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
         }
         
         .modal-header {
-            background: linear-gradient(135deg, #8B7355 0%, #A0826D 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 16px 16px 0 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 20px;
         }
         
         .modal-title {
-            font-size: 18px;
-            font-weight: 600;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
         }
         
         .close-btn {
             font-size: 28px;
+            color: #999;
             cursor: pointer;
             background: none;
             border: none;
-            color: white;
-            padding: 0;
-            width: 30px;
-            height: 30px;
+        }
+        
+        .option-list {
             display: flex;
-            align-items: center;
-            justify-content: center;
+            flex-direction: column;
+            gap: 15px;
         }
         
-        .modal-body {
+        .option-item {
             padding: 20px;
-        }
-        
-        .list-item {
-            padding: 15px;
-            border-bottom: 1px solid #f0f0f0;
+            background: #f8f9ff;
+            border-radius: 12px;
             cursor: pointer;
             transition: background 0.2s;
         }
         
-        .list-item:active {
-            background: #f8f8f8;
+        .option-item:hover {
+            background: #e8e9ff;
         }
         
-        .list-item:last-child {
-            border-bottom: none;
-        }
-        
-        .list-item-title {
-            font-size: 15px;
-            font-weight: 500;
+        .option-name {
+            font-size: 16px;
+            font-weight: bold;
             color: #333;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
         }
         
-        .list-item-desc {
+        .option-desc {
             font-size: 13px;
-            color: #999;
+            color: #666;
         }
         
-        .calendar-grid {
-            display: grid;
-            gap: 10px;
-        }
-        
-        .calendar-item {
-            background: #F8F4F0;
-            padding: 12px;
-            border-radius: 8px;
-            border-left: 4px solid #8B7355;
-        }
-        
-        .calendar-date {
-            font-size: 12px;
-            color: #8B7355;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-        
-        .calendar-event {
-            font-size: 14px;
-            color: #333;
-        }
-        
-        .device-card {
-            background: linear-gradient(135deg, #8B7355 0%, #A0826D 100%);
-            color: white;
+        .activity-card {
             padding: 15px;
+            background: white;
             border-radius: 12px;
             margin-bottom: 15px;
+            border-left: 4px solid #667eea;
         }
         
-        .device-status {
+        .activity-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        
+        .activity-icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        
+        .activity-info {
+            flex: 1;
+        }
+        
+        .activity-name {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .activity-details {
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .register-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        
+        .health-record {
+            padding: 15px;
+            background: #f8f9ff;
+            border-radius: 12px;
             margin-bottom: 15px;
         }
         
-        .device-name {
-            font-size: 16px;
-            font-weight: 600;
-        }
-        
-        .battery-level {
+        .record-title {
             font-size: 14px;
-        }
-        
-        .health-metrics {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-        
-        .metric-item {
-            background: rgba(255,255,255,0.2);
-            padding: 10px;
-            border-radius: 8px;
-            text-align: center;
-        }
-        
-        .metric-value {
-            font-size: 20px;
             font-weight: bold;
-            margin-bottom: 4px;
+            color: #333;
+            margin-bottom: 8px;
         }
         
-        .metric-label {
-            font-size: 12px;
-            opacity: 0.9;
+        .record-value {
+            font-size: 13px;
+            color: #666;
         }
         
-        .emergency-btn {
-            background: #FF4444;
-            color: white;
-            border: none;
+        .medication-item {
             padding: 15px;
+            background: #f8f9ff;
             border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            width: 100%;
-            cursor: pointer;
-            margin-top: 15px;
+            margin-bottom: 15px;
         }
         
-        .emergency-btn:active {
-            background: #CC0000;
+        .med-name {
+            font-size: 15px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
         }
         
-        .expense-item {
+        .med-details {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .info-row {
             display: flex;
             justify-content: space-between;
             padding: 12px 0;
             border-bottom: 1px solid #f0f0f0;
         }
         
-        .expense-item:last-child {
+        .info-row:last-child {
             border-bottom: none;
         }
         
-        .expense-name {
+        .info-label {
+            color: #999;
             font-size: 14px;
+        }
+        
+        .info-value {
             color: #333;
-        }
-        
-        .expense-amount {
             font-size: 14px;
-            font-weight: 600;
-            color: #8B7355;
+            font-weight: 500;
         }
         
-        .member-level {
-            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-            color: white;
-            padding: 15px;
-            border-radius: 12px;
-            text-align: center;
-            margin-bottom: 15px;
+        .fee-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
         }
         
-        .level-badge {
-            font-size: 24px;
-            margin-bottom: 8px;
-        }
-        
-        .level-name {
-            font-size: 18px;
-            font-weight: 600;
+        .fee-item:last-child {
+            border-bottom: none;
+            padding-top: 15px;
+            margin-top: 10px;
+            border-top: 2px solid #667eea;
         }
         
         .contact-card {
-            background: white;
+            padding: 20px;
+            background: #f8f9ff;
             border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 15px;
         }
         
         .contact-name {
-            font-size: 15px;
-            font-weight: 600;
+            font-size: 16px;
+            font-weight: bold;
             color: #333;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
         
-        .contact-info {
-            font-size: 14px;
+        .contact-details {
+            font-size: 13px;
             color: #666;
-            margin: 4px 0;
+            line-height: 1.8;
         }
         
-        .call-btn {
-            background: #8B7355;
+        .contact-btn {
+            background: #667eea;
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 10px 25px;
+            border-radius: 20px;
             font-size: 14px;
+            margin-top: 15px;
             cursor: pointer;
-            margin-top: 10px;
+        }
+        
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        .service-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
     </style>
 </head>
 <body>
-    <!-- 頁首 -->
-    <div class="header">
-        <div class="greeting">尊敬的貴賓會員，您好！</div>
-        <div class="member-info">
-            <span>鑽石會員 | 王先生</span>
-            <span>消息 <span class="notification-badge">3</span></span>
-        </div>
-    </div>
-    
-    <div class="container">
-        <!-- 首頁內容 -->
-        <div id="homeTab" class="tab-content">
-            <!-- 今日提醒 -->
-            <div class="reminder-card">
-                <div class="reminder-title">📅 今日提醒</div>
-                <div class="reminder-item">
-                    💊 09:00 - 服藥提醒：降壓藥 + 維生素D
+    <!-- 首頁 -->
+    <div class="page active" id="home-page">
+        <div class="container">
+            <div class="header">
+                <div class="greeting">尊敬的貴賓會員,您好!</div>
+                <div class="user-info">
+                    <div class="user-name">💎 鑽石會員 | 王先生</div>
+                    <div class="notification-badge">3</div>
                 </div>
-                <div class="reminder-item">
-                    🎨 14:00 - 書法課程（文化活動中心）
-                </div>
-                <div class="reminder-item">
-                    💊 18:00 - 晚餐後服藥提醒
+                
+                <div class="today-reminders">
+                    <div class="reminder-title">📅 今日提醒</div>
+                    <div class="reminder-item">💊 09:00 - 服藥提醒：降壓藥 + 維生素D</div>
+                    <div class="reminder-item">🎨 14:00 - 書法課程（文化活動中心）</div>
+                    <div class="reminder-item">💊 18:00 - 晚餐後服藥提醒</div>
                 </div>
             </div>
             
-            <!-- 快捷服務 -->
-            <div class="quick-service">
-                <div class="section-title">🔧 快捷服務</div>
-                <div class="service-grid">
-                    <div class="service-item" onclick="openModal('medical')">
-                        <div class="service-icon">🏥</div>
-                        <div class="service-name">醫療預約</div>
-                    </div>
-                    <div class="service-item" onclick="openModal('activity')">
-                        <div class="service-icon">🎉</div>
-                        <div class="service-name">活動報名</div>
-                    </div>
-                    <div class="service-item" onclick="switchTab('health')">
-                        <div class="service-icon">❤️</div>
-                        <div class="service-name">健康監測</div>
-                    </div>
-                    <div class="service-item" onclick="openModal('healthRecord')">
-                        <div class="service-icon">📋</div>
-                        <div class="service-name">健康檔案</div>
-                    </div>
+            <div class="quick-actions">
+                <div class="quick-action" onclick="openModal('medical-modal')">
+                    <div class="action-icon">🏥</div>
+                    <div class="action-label">醫療預約</div>
+                </div>
+                <div class="quick-action" onclick="openModal('activity-modal')">
+                    <div class="action-icon">🎉</div>
+                    <div class="action-label">活動報名</div>
+                </div>
+                <div class="quick-action" onclick="showPage('health-page')">
+                    <div class="action-icon">❤️</div>
+                    <div class="action-label">健康監測</div>
+                </div>
+                <div class="quick-action" onclick="openModal('health-record-modal')">
+                    <div class="action-icon">📋</div>
+                    <div class="action-label">健康檔案</div>
                 </div>
             </div>
             
-            <!-- 會員統計 -->
             <div class="stats-card">
-                <div class="section-title">📊 本月統計</div>
+                <div class="stats-title">📊 本月統計</div>
                 <div class="stats-grid">
                     <div class="stat-item">
-                        <div class="stat-number">8</div>
+                        <div class="stat-value">8</div>
                         <div class="stat-label">活動參與</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number">12</div>
+                        <div class="stat-value">12</div>
                         <div class="stat-label">服務次數</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number">2,850</div>
+                        <div class="stat-value">2,850</div>
                         <div class="stat-label">積分</div>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <!-- 服務頁面 -->
-        <div id="serviceTab" class="tab-content hidden">
-            <div class="quick-service">
-                <div class="section-title">🏥 醫療服務</div>
-                <div class="list-item" onclick="openModal('medical')">
-                    <div class="list-item-title">門診掛號</div>
-                    <div class="list-item-desc">預約專科門診服務</div>
-                </div>
-                <div class="list-item" onclick="alert('健康諮詢功能')">
-                    <div class="list-item-title">健康諮詢</div>
-                    <div class="list-item-desc">線上諮詢健康問題</div>
-                </div>
-                <div class="list-item" onclick="alert('體檢預約功能')">
-                    <div class="list-item-title">體檢預約</div>
-                    <div class="list-item-desc">安排定期健康檢查</div>
-                </div>
-            </div>
-            
-            <div class="quick-service">
-                <div class="section-title">🤲 護理服務</div>
-                <div class="list-item" onclick="alert('居家護理功能')">
-                    <div class="list-item-title">居家護理</div>
-                    <div class="list-item-desc">專業護理人員到府服務</div>
-                </div>
-                <div class="list-item" onclick="alert('陪診服務功能')">
-                    <div class="list-item-title">陪診服務</div>
-                    <div class="list-item-desc">就醫陪同與協助</div>
-                </div>
-                <div class="list-item" onclick="alert('生活照護功能')">
-                    <div class="list-item-title">生活照護</div>
-                    <div class="list-item-desc">日常生活起居協助</div>
+    </div>
+    
+    <!-- 服務頁 -->
+    <div class="page" id="service-page">
+        <div class="container">
+            <div class="stats-card">
+                <div class="stats-title">🏥 醫療服務</div>
+                <div class="service-list">
+                    <div class="option-item" onclick="openModal('medical-modal')">
+                        <div class="option-name">門診掛號</div>
+                        <div class="option-desc">預約專科門診服務</div>
+                    </div>
+                    <div class="option-item">
+                        <div class="option-name">健康諮詢</div>
+                        <div class="option-desc">線上諮詢健康問題</div>
+                    </div>
+                    <div class="option-item">
+                        <div class="option-name">體檢預約</div>
+                        <div class="option-desc">安排定期健康檢查</div>
+                    </div>
                 </div>
             </div>
             
-            <div class="quick-service">
-                <div class="section-title">💆 康復理療</div>
-                <div class="list-item" onclick="alert('物理治療功能')">
-                    <div class="list-item-title">物理治療</div>
-                    <div class="list-item-desc">專業物理治療服務</div>
+            <div class="stats-card">
+                <div class="stats-title">🤲 護理服務</div>
+                <div class="service-list">
+                    <div class="option-item">
+                        <div class="option-name">居家護理</div>
+                        <div class="option-desc">專業護理人員到府服務</div>
+                    </div>
+                    <div class="option-item">
+                        <div class="option-name">陪診服務</div>
+                        <div class="option-desc">就醫陪同與協助</div>
+                    </div>
+                    <div class="option-item">
+                        <div class="option-name">生活照護</div>
+                        <div class="option-desc">日常生活起居協助</div>
+                    </div>
                 </div>
-                <div class="list-item" onclick="alert('中醫推拿功能')">
-                    <div class="list-item-title">中醫推拿</div>
-                    <div class="list-item-desc">傳統中醫推拿按摩</div>
-                </div>
-                <div class="list-item" onclick="alert('針灸按摩功能')">
-                    <div class="list-item-title">針灸按摩</div>
-                    <div class="list-item-desc">針灸理療服務</div>
+            </div>
+            
+            <div class="stats-card">
+                <div class="stats-title">💆 康復理療</div>
+                <div class="service-list">
+                    <div class="option-item">
+                        <div class="option-name">物理治療</div>
+                        <div class="option-desc">專業物理治療服務</div>
+                    </div>
+                    <div class="option-item">
+                        <div class="option-name">中醫推拿</div>
+                        <div class="option-desc">傳統中醫推拿按摩</div>
+                    </div>
+                    <div class="option-item">
+                        <div class="option-name">針灸按摩</div>
+                        <div class="option-desc">針灸理療服務</div>
+                    </div>
                 </div>
             </div>
         </div>
-        
-        <!-- 健康頁面 -->
-        <div id="healthTab" class="tab-content hidden">
-            <!-- 穿戴設備 -->
-            <div class="device-card">
-                <div class="device-status">
-                    <div class="device-name">智能健康戒指</div>
-                    <div class="battery-level">🔋 85%</div>
+    </div>
+    
+    <!-- 健康頁 -->
+    <div class="page" id="health-page">
+        <div class="container">
+            <div class="health-card">
+                <div class="health-title">
+                    智能健康戒指
+                    <span class="battery">🔋 85%</span>
                 </div>
                 <div class="health-metrics">
-                    <div class="metric-item">
+                    <div class="metric">
                         <div class="metric-value">6,542</div>
                         <div class="metric-label">今日步數</div>
                     </div>
-                    <div class="metric-item">
+                    <div class="metric">
                         <div class="metric-value">72</div>
                         <div class="metric-label">心率(bpm)</div>
                     </div>
-                    <div class="metric-item">
+                    <div class="metric">
                         <div class="metric-value">98%</div>
                         <div class="metric-label">血氧</div>
                     </div>
-                    <div class="metric-item">
+                    <div class="metric">
                         <div class="metric-value">7.2h</div>
                         <div class="metric-label">睡眠</div>
                     </div>
                 </div>
-                <button class="emergency-btn" onclick="alert('緊急呼叫已發送！')">🚨 緊急呼叫</button>
             </div>
             
-            <!-- 健康檔案 -->
-            <div class="quick-service">
-                <div class="section-title">📋 健康檔案</div>
-                <div class="list-item" onclick="openModal('healthRecord')">
-                    <div class="list-item-title">個人病歷記錄</div>
-                    <div class="list-item-desc">查看完整病歷資料</div>
-                </div>
-                <div class="list-item" onclick="alert('診療歷史')">
-                    <div class="list-item-title">診療歷史查詢</div>
-                    <div class="list-item-desc">過往就醫記錄</div>
-                </div>
-                <div class="list-item" onclick="openModal('medication')">
-                    <div class="list-item-title">當前用藥管理</div>
-                    <div class="list-item-desc">正在服用的藥物清單</div>
+            <button class="emergency-button" onclick="alert('緊急呼叫已啟動！\n專屬管家將立即聯繫您。')">
+                🚨 緊急呼叫
+            </button>
+            
+            <div class="stats-card">
+                <div class="stats-title">📋 健康檔案</div>
+                <div class="service-list">
+                    <div class="option-item" onclick="openModal('health-record-modal')">
+                        <div class="option-name">個人病歷記錄</div>
+                        <div class="option-desc">查看完整病歷資料</div>
+                    </div>
+                    <div class="option-item">
+                        <div class="option-name">診療歷史查詢</div>
+                        <div class="option-desc">過往就醫記錄</div>
+                    </div>
+                    <div class="option-item" onclick="openModal('medication-modal')">
+                        <div class="option-name">當前用藥管理</div>
+                        <div class="option-desc">正在服用的藥物清單</div>
+                    </div>
                 </div>
             </div>
         </div>
-        
-        <!-- 行事曆頁面 -->
-        <div id="calendarTab" class="tab-content hidden">
-            <div class="quick-service">
-                <div class="section-title">📅 本週行程</div>
-                <div class="calendar-grid">
-                    <div class="calendar-item">
-                        <div class="calendar-date">週一 01/27 14:00</div>
-                        <div class="calendar-event">🎨 書法課程</div>
-                    </div>
-                    <div class="calendar-item">
-                        <div class="calendar-date">週三 01/29 09:00</div>
-                        <div class="calendar-event">🏥 門診掛號 - 心臟科</div>
-                    </div>
-                    <div class="calendar-item">
-                        <div class="calendar-date">週四 01/30 10:00</div>
-                        <div class="calendar-event">🧘 太極拳課程</div>
-                    </div>
-                    <div class="calendar-item">
-                        <div class="calendar-date">週六 02/01 全天</div>
-                        <div class="calendar-event">🏞️ 溫泉一日遊</div>
-                    </div>
-                    <div class="calendar-item">
-                        <div class="calendar-date">每日 09:00/18:00</div>
-                        <div class="calendar-event">💊 用藥提醒</div>
-                    </div>
+    </div>
+    
+    <!-- 行事曆頁 -->
+    <div class="page" id="calendar-page">
+        <div class="container">
+            <div class="schedule-card">
+                <div class="stats-title">📅 本週行程</div>
+                <div class="schedule-item">
+                    <div class="schedule-date">週一 01/27 14:00</div>
+                    <div class="schedule-title">🎨 書法課程</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="schedule-date">週三 01/29 09:00</div>
+                    <div class="schedule-title">🏥 門診掛號 - 心臟科</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="schedule-date">週四 01/30 10:00</div>
+                    <div class="schedule-title">🧘 太極拳課程</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="schedule-date">週六 02/01 全天</div>
+                    <div class="schedule-title">🏞️ 溫泉一日遊</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="schedule-date">每日 09:00/18:00</div>
+                    <div class="schedule-title">💊 用藥提醒</div>
                 </div>
             </div>
             
-            <div class="quick-service">
-                <div class="section-title">🎯 活動報名</div>
-                <div class="list-item" onclick="openModal('activity')">
-                    <div class="list-item-title">查看全部活動</div>
-                    <div class="list-item-desc">瀏覽並報名各類活動</div>
-                </div>
+            <div class="stats-card">
+                <div class="stats-title">🎯 活動報名</div>
+                <button class="option-item" onclick="openModal('activity-modal')" style="width: 100%; border: none; cursor: pointer;">
+                    <div class="option-name">查看全部活動</div>
+                    <div class="option-desc">瀏覽並報名各類活動</div>
+                </button>
             </div>
         </div>
-        
-        <!-- 我的頁面 -->
-        <div id="profileTab" class="tab-content hidden">
-            <!-- 會員等級 -->
-            <div class="member-level">
-                <div class="level-badge">💎</div>
-                <div class="level-name">鑽石會員</div>
-            </div>
-            
-            <!-- 會員資訊 -->
-            <div class="quick-service">
-                <div class="section-title">👤 個人資訊</div>
-                <div class="list-item" onclick="openModal('memberInfo')">
-                    <div class="list-item-title">會員資料</div>
-                    <div class="list-item-desc">查看個人基本資料</div>
-                </div>
-                <div class="list-item" onclick="openModal('finance')">
-                    <div class="list-item-title">財務報表</div>
-                    <div class="list-item-desc">費用統計與繳費狀態</div>
-                </div>
-                <div class="list-item" onclick="alert('會員權益')">
-                    <div class="list-item-title">會員權益</div>
-                    <div class="list-item-desc">查看專屬會員福利</div>
-                </div>
-            </div>
-            
-            <!-- 專屬服務 -->
-            <div class="quick-service">
-                <div class="section-title">🎁 專屬服務</div>
-                <div class="list-item" onclick="openModal('butler')">
-                    <div class="list-item-title">專屬管家</div>
-                    <div class="list-item-desc">24小時貼心服務</div>
-                </div>
-                <div class="list-item" onclick="openModal('emergency')">
-                    <div class="list-item-title">緊急聯絡人</div>
-                    <div class="list-item-desc">管理緊急聯絡資訊</div>
+    </div>
+    
+    <!-- 我的頁 -->
+    <div class="page" id="profile-page">
+        <div class="container">
+            <div class="stats-card">
+                <div class="stats-title">💎 鑽石會員</div>
+                
+                <div class="service-list">
+                    <div class="option-item" onclick="openModal('member-info-modal')">
+                        <div class="option-name">👤 個人資訊</div>
+                        <div class="option-desc">會員資料</div>
+                    </div>
+                    
+                    <div class="option-item" onclick="openModal('finance-modal')">
+                        <div class="option-name">📊 財務報表</div>
+                        <div class="option-desc">費用統計與繳費狀態</div>
+                    </div>
+                    
+                    <div class="option-item">
+                        <div class="option-name">🎁 會員權益</div>
+                        <div class="option-desc">查看專屬會員福利</div>
+                    </div>
                 </div>
             </div>
             
-            <!-- 設置 -->
-            <div class="quick-service">
-                <div class="section-title">⚙️ 設置</div>
-                <div class="list-item" onclick="alert('通知設置')">
-                    <div class="list-item-title">通知設置</div>
+            <div class="stats-card">
+                <div class="stats-title">🎁 專屬服務</div>
+                <div class="service-list">
+                    <div class="option-item" onclick="openModal('butler-modal')">
+                        <div class="option-name">👨‍💼 專屬管家</div>
+                        <div class="option-desc">24小時貼心服務</div>
+                    </div>
+                    <div class="option-item" onclick="openModal('emergency-contact-modal')">
+                        <div class="option-name">📞 緊急聯絡人</div>
+                        <div class="option-desc">管理緊急聯絡資訊</div>
+                    </div>
                 </div>
-                <div class="list-item" onclick="alert('隱私設置')">
-                    <div class="list-item-title">隱私設置</div>
-                </div>
-                <div class="list-item" onclick="alert('關於SLLCC')">
-                    <div class="list-item-title">關於 SLLCC</div>
+            </div>
+            
+            <div class="stats-card">
+                <div class="stats-title">⚙️ 設置</div>
+                <div class="service-list">
+                    <div class="option-item">
+                        <div class="option-name">通知設置</div>
+                    </div>
+                    <div class="option-item">
+                        <div class="option-name">隱私設置</div>
+                    </div>
+                    <div class="option-item">
+                        <div class="option-name">關於 SLCC</div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     
     <!-- 底部導航 -->
-    <div class="tab-bar">
-        <div class="tab-item active" onclick="switchTab('home')">
-            <div class="tab-icon">🏠</div>
-            <div class="tab-label">首頁</div>
+    <div class="bottom-nav">
+        <div class="nav-item active" onclick="showPage('home-page')">
+            <div class="nav-icon">🏠</div>
+            <div class="nav-label">首頁</div>
         </div>
-        <div class="tab-item" onclick="switchTab('service')">
-            <div class="tab-icon">🔧</div>
-            <div class="tab-label">服務</div>
+        <div class="nav-item" onclick="showPage('service-page')">
+            <div class="nav-icon">🔧</div>
+            <div class="nav-label">服務</div>
         </div>
-        <div class="tab-item" onclick="switchTab('health')">
-            <div class="tab-icon">❤️</div>
-            <div class="tab-label">健康</div>
+        <div class="nav-item" onclick="showPage('health-page')">
+            <div class="nav-icon">❤️</div>
+            <div class="nav-label">健康</div>
         </div>
-        <div class="tab-item" onclick="switchTab('calendar')">
-            <div class="tab-icon">📅</div>
-            <div class="tab-label">行事曆</div>
+        <div class="nav-item" onclick="showPage('calendar-page')">
+            <div class="nav-icon">📅</div>
+            <div class="nav-label">行事曆</div>
         </div>
-        <div class="tab-item" onclick="switchTab('profile')">
-            <div class="tab-icon">👤</div>
-            <div class="tab-label">我的</div>
+        <div class="nav-item" onclick="showPage('profile-page')">
+            <div class="nav-icon">👤</div>
+            <div class="nav-label">我的</div>
         </div>
     </div>
     
-    <!-- 醫療預約彈窗 -->
-    <div id="medicalModal" class="modal">
+    <!-- 醫療預約模態框 -->
+    <div class="modal" id="medical-modal">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="modal-title">🏥 醫療預約</div>
-                <button class="close-btn" onclick="closeModal('medical')">&times;</button>
+                <button class="close-btn" onclick="closeModal('medical-modal')">×</button>
             </div>
-            <div class="modal-body">
-                <div class="list-item" onclick="alert('已預約心臟科')">
-                    <div class="list-item-title">心臟科</div>
-                    <div class="list-item-desc">心血管疾病診療</div>
+            <div class="option-list">
+                <div class="option-item">
+                    <div class="option-name">心臟科</div>
+                    <div class="option-desc">心血管疾病診療</div>
                 </div>
-                <div class="list-item" onclick="alert('已預約骨科')">
-                    <div class="list-item-title">骨科</div>
-                    <div class="list-item-desc">骨骼關節疾病</div>
+                <div class="option-item">
+                    <div class="option-name">骨科</div>
+                    <div class="option-desc">骨骼關節疾病</div>
                 </div>
-                <div class="list-item" onclick="alert('已預約神經科')">
-                    <div class="list-item-title">神經科</div>
-                    <div class="list-item-desc">神經系統疾病</div>
+                <div class="option-item">
+                    <div class="option-name">神經科</div>
+                    <div class="option-desc">神經系統疾病</div>
                 </div>
-                <div class="list-item" onclick="alert('已預約內科')">
-                    <div class="list-item-title">內科</div>
-                    <div class="list-item-desc">一般內科診療</div>
+                <div class="option-item">
+                    <div class="option-name">內科</div>
+                    <div class="option-desc">一般內科診療</div>
                 </div>
-                <div class="list-item" onclick="alert('已預約中醫科')">
-                    <div class="list-item-title">中醫科</div>
-                    <div class="list-item-desc">中醫診療調理</div>
+                <div class="option-item">
+                    <div class="option-name">中醫科</div>
+                    <div class="option-desc">中醫診療調理</div>
                 </div>
             </div>
         </div>
     </div>
     
-    <!-- 活動報名彈窗 -->
-    <div id="activityModal" class="modal">
+    <!-- 活動報名模態框 -->
+    <div class="modal" id="activity-modal">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="modal-title">🎉 活動報名</div>
-                <button class="close-btn" onclick="closeModal('activity')">&times;</button>
+                <button class="close-btn" onclick="closeModal('activity-modal')">×</button>
             </div>
-            <div class="modal-body">
-                <div style="margin-bottom: 20px;">
-                    <div style="font-weight: 600; margin-bottom: 10px;">🏞️ 旅遊行程</div>
-                    <div class="list-item" onclick="alert('已報名溫泉一日遊')">
-                        <div class="list-item-title">陽明山溫泉一日遊</div>
-                        <div class="list-item-desc">02/01 (六) | 名額：30人 | 剩餘：5位</div>
-                    </div>
-                    <div class="list-item" onclick="alert('已報名花蓮三日遊')">
-                        <div class="list-item-title">花蓮太魯閣三日遊</div>
-                        <div class="list-item-desc">02/15-17 | 名額：20人 | 剩餘：8位</div>
-                    </div>
+            
+            <div style="margin-bottom: 25px;">
+                <h3 style="margin-bottom: 15px;">🏞️ 旅遊行程</h3>
+                <div class="activity-card">
+                    <div class="activity-name">陽明山溫泉一日遊</div>
+                    <div class="activity-details">02/01 (六) | 名額：30人 | 剩餘：5位</div>
+                    <button class="register-btn" onclick="alert('報名成功！')">立即報名</button>
                 </div>
-                
-                <div style="margin-bottom: 20px;">
-                    <div style="font-weight: 600; margin-bottom: 10px;">🎨 文娛活動</div>
-                    <div class="list-item" onclick="alert('已報名書法課程')">
-                        <div class="list-item-title">書法課程</div>
-                        <div class="list-item-desc">每週一 14:00 | 持續進行中</div>
-                    </div>
-                    <div class="list-item" onclick="alert('已報名音樂欣賞')">
-                        <div class="list-item-title">古典音樂欣賞會</div>
-                        <div class="list-item-desc">02/05 (三) 15:00 | 名額：50人</div>
-                    </div>
+                <div class="activity-card">
+                    <div class="activity-name">花蓮太魯閣三日遊</div>
+                    <div class="activity-details">02/15-17 | 名額：20人 | 剩餘：8位</div>
+                    <button class="register-btn" onclick="alert('報名成功！')">立即報名</button>
                 </div>
-                
-                <div style="margin-bottom: 20px;">
-                    <div style="font-weight: 600; margin-bottom: 10px;">🧘 體育活動</div>
-                    <div class="list-item" onclick="alert('已報名太極拳')">
-                        <div class="list-item-title">太極拳課程</div>
-                        <div class="list-item-desc">每週四 10:00 | 持續進行中</div>
-                    </div>
-                    <div class="list-item" onclick="alert('已報名瑜伽課')">
-                        <div class="list-item-title">養生瑜伽</div>
-                        <div class="list-item-desc">每週二、五 09:00</div>
-                    </div>
+            </div>
+            
+            <div style="margin-bottom: 25px;">
+                <h3 style="margin-bottom: 15px;">🎨 文娛活動</h3>
+                <div class="activity-card">
+                    <div class="activity-name">書法課程</div>
+                    <div class="activity-details">每週一 14:00 | 持續進行中</div>
+                    <button class="register-btn" onclick="alert('已報名')">已報名</button>
                 </div>
-                
-                <div>
-                    <div style="font-weight: 600; margin-bottom: 10px;">☕ 社交活動</div>
-                    <div class="list-item" onclick="alert('已報名茶話會')">
-                        <div class="list-item-title">週末茶話會</div>
-                        <div class="list-item-desc">每週六 14:00 | 輕鬆交流</div>
-                    </div>
-                    <div class="list-item" onclick="alert('已報名生日會')">
-                        <div class="list-item-title">本月壽星慶生會</div>
-                        <div class="list-item-desc">01/31 (五) 15:00</div>
-                    </div>
+                <div class="activity-card">
+                    <div class="activity-name">古典音樂欣賞會</div>
+                    <div class="activity-details">02/05 (三) 15:00 | 名額：50人</div>
+                    <button class="register-btn" onclick="alert('報名成功！')">立即報名</button>
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 25px;">
+                <h3 style="margin-bottom: 15px;">🧘 體育活動</h3>
+                <div class="activity-card">
+                    <div class="activity-name">太極拳課程</div>
+                    <div class="activity-details">每週四 10:00 | 持續進行中</div>
+                    <button class="register-btn" onclick="alert('已報名')">已報名</button>
+                </div>
+                <div class="activity-card">
+                    <div class="activity-name">養生瑜伽</div>
+                    <div class="activity-details">每週二、五 09:00</div>
+                    <button class="register-btn" onclick="alert('報名成功！')">立即報名</button>
+                </div>
+            </div>
+            
+            <div>
+                <h3 style="margin-bottom: 15px;">☕ 社交活動</h3>
+                <div class="activity-card">
+                    <div class="activity-name">週末茶話會</div>
+                    <div class="activity-details">每週六 14:00 | 輕鬆交流</div>
+                    <button class="register-btn" onclick="alert('報名成功！')">立即報名</button>
+                </div>
+                <div class="activity-card">
+                    <div class="activity-name">本月壽星慶生會</div>
+                    <div class="activity-details">01/31 (五) 15:00</div>
+                    <button class="register-btn" onclick="alert('報名成功！')">立即報名</button>
                 </div>
             </div>
         </div>
     </div>
     
-    <!-- 健康檔案彈窗 -->
-    <div id="healthRecordModal" class="modal">
+    <!-- 健康檔案模態框 -->
+    <div class="modal" id="health-record-modal">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="modal-title">📋 健康檔案</div>
-                <button class="close-btn" onclick="closeModal('healthRecord')">&times;</button>
+                <button class="close-btn" onclick="closeModal('health-record-modal')">×</button>
             </div>
-            <div class="modal-body">
-                <div class="list-item">
-                    <div class="list-item-title">血壓記錄</div>
-                    <div class="list-item-desc">收縮壓：125 mmHg | 舒張壓：78 mmHg</div>
-                </div>
-                <div class="list-item">
-                    <div class="list-item-title">血糖記錄</div>
-                    <div class="list-item-desc">空腹血糖：5.8 mmol/L（正常範圍）</div>
-                </div>
-                <div class="list-item">
-                    <div class="list-item-title">最近體檢</div>
-                    <div class="list-item-desc">2024/12/15 - 年度健康檢查（查看報告）</div>
-                </div>
-                <div class="list-item">
-                    <div class="list-item-title">過敏記錄</div>
-                    <div class="list-item-desc">青黴素過敏</div>
-                </div>
-                <div class="list-item">
-                    <div class="list-item-title">慢性病史</div>
-                    <div class="list-item-desc">高血壓、糖尿病（已控制）</div>
-                </div>
+            
+            <div class="health-record">
+                <div class="record-title">血壓記錄</div>
+                <div class="record-value">收縮壓：125 mmHg | 舒張壓：78 mmHg</div>
+            </div>
+            
+            <div class="health-record">
+                <div class="record-title">血糖記錄</div>
+                <div class="record-value">空腹血糖：5.8 mmol/L（正常範圍）</div>
+            </div>
+            
+            <div class="health-record">
+                <div class="record-title">最近體檢</div>
+                <div class="record-value">2024/12/15 - 年度健康檢查（查看報告）</div>
+            </div>
+            
+            <div class="health-record">
+                <div class="record-title">過敏記錄</div>
+                <div class="record-value">青黴素過敏</div>
+            </div>
+            
+            <div class="health-record">
+                <div class="record-title">慢性病史</div>
+                <div class="record-value">高血壓、糖尿病（已控制）</div>
             </div>
         </div>
     </div>
     
-    <!-- 用藥管理彈窗 -->
-    <div id="medicationModal" class="modal">
+    <!-- 用藥管理模態框 -->
+    <div class="modal" id="medication-modal">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="modal-title">💊 當前用藥</div>
-                <button class="close-btn" onclick="closeModal('medication')">&times;</button>
+                <button class="close-btn" onclick="closeModal('medication-modal')">×</button>
             </div>
-            <div class="modal-body">
-                <div class="list-item">
-                    <div class="list-item-title">降壓藥（Amlodipine）</div>
-                    <div class="list-item-desc">每日一次，早上9:00 | 餐後服用</div>
-                </div>
-                <div class="list-item">
-                    <div class="list-item-title">降糖藥（Metformin）</div>
-                    <div class="list-item-desc">每日兩次，早晚餐後 | 500mg</div>
-                </div>
-                <div class="list-item">
-                    <div class="list-item-title">維生素D補充劑</div>
-                    <div class="list-item-desc">每日一次，早上9:00 | 1000 IU</div>
-                </div>
-                <div class="list-item">
-                    <div class="list-item-title">鈣片</div>
-                    <div class="list-item-desc">每日一次，晚餐後 | 600mg</div>
-                </div>
+            
+            <div class="medication-item">
+                <div class="med-name">降壓藥（Amlodipine）</div>
+                <div class="med-details">每日一次，早上9:00 | 餐後服用</div>
+            </div>
+            
+            <div class="medication-item">
+                <div class="med-name">降糖藥（Metformin）</div>
+                <div class="med-details">每日兩次，早晚餐後 | 500mg</div>
+            </div>
+            
+            <div class="medication-item">
+                <div class="med-name">維生素D補充劑</div>
+                <div class="med-details">每日一次，早上9:00 | 1000 IU</div>
+            </div>
+            
+            <div class="medication-item">
+                <div class="med-name">鈣片</div>
+                <div class="med-details">每日一次，晚餐後 | 600mg</div>
             </div>
         </div>
     </div>
     
-    <!-- 會員資訊彈窗 -->
-    <div id="memberInfoModal" class="modal">
+    <!-- 會員資料模態框 -->
+    <div class="modal" id="member-info-modal">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="modal-title">👤 會員資料</div>
-                <button class="close-btn" onclick="closeModal('memberInfo')">&times;</button>
+                <button class="close-btn" onclick="closeModal('member-info-modal')">×</button>
             </div>
-            <div class="modal-body">
-                <div class="list-item">
-                    <div class="list-item-title">姓名</div>
-                    <div class="list-item-desc">王大明</div>
-                </div>
-                <div class="list-item">
-                    <div class="list-item-title">會員編號</div>
-                    <div class="list-item-desc">SLLCC-2024-0168</div>
-                </div>
-                <div class="list-item">
-                    <div class="list-item-title">會員等級</div>
-                    <div class="list-item-desc">💎 鑽石會員</div>
-                </div>
-                <div class="list-item">
-                    <div class="list-item-title">加入日期</div>
-                    <div class="list-item-desc">2024年3月15日</div>
-                </div>
-                <div class="list-item">
-                    <div class="list-item-title">聯絡電話</div>
-                    <div class="list-item-desc">0912-345-678</div>
-                </div>
-                <div class="list-item">
-                    <div class="list-item-title">居住房號</div>
-                    <div class="list-item-desc">A棟 8樓 801室</div>
-                </div>
+            
+            <div class="info-row">
+                <div class="info-label">姓名</div>
+                <div class="info-value">王大明</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">會員編號</div>
+                <div class="info-value">SLCC-2024-0168</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">會員等級</div>
+                <div class="info-value">💎 鑽石會員</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">加入日期</div>
+                <div class="info-value">2024年3月15日</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">聯絡電話</div>
+                <div class="info-value">0912-345-678</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">居住房號</div>
+                <div class="info-value">A棟 8樓 801室</div>
             </div>
         </div>
     </div>
     
-    <!-- 財務報表彈窗 -->
-    <div id="financeModal" class="modal">
+    <!-- 財務報表模態框 -->
+    <div class="modal" id="finance-modal">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="modal-title">💰 財務報表</div>
-                <button class="close-btn" onclick="closeModal('finance')">&times;</button>
+                <button class="close-btn" onclick="closeModal('finance-modal')">×</button>
             </div>
-            <div class="modal-body">
-                <div style="background: #F8F4F0; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                    <div style="font-size: 14px; color: #666; margin-bottom: 5px;">本月總費用</div>
-                    <div style="font-size: 28px; font-weight: bold; color: #8B7355;">NT$ 28,500</div>
-                    <div style="font-size: 12px; color: #28a745; margin-top: 5px;">✓ 已繳清</div>
-                </div>
-                
-                <div style="font-weight: 600; margin-bottom: 10px;">費用明細</div>
-                <div class="expense-item">
-                    <span class="expense-name">基本月費</span>
-                    <span class="expense-amount">NT$ 15,000</span>
-                </div>
-                <div class="expense-item">
-                    <span class="expense-name">醫療服務費</span>
-                    <span class="expense-amount">NT$ 5,200</span>
-                </div>
-                <div class="expense-item">
-                    <span class="expense-name">理療按摩</span>
-                    <span class="expense-amount">NT$ 3,800</span>
-                </div>
-                <div class="expense-item">
-                    <span class="expense-name">活動費用</span>
-                    <span class="expense-amount">NT$ 2,500</span>
-                </div>
-                <div class="expense-item">
-                    <span class="expense-name">餐飲費用</span>
-                    <span class="expense-amount">NT$ 2,000</span>
-                </div>
-                
-                <div style="margin-top: 20px; padding: 15px; background: #E8F5E9; border-radius: 8px;">
-                    <div style="font-size: 14px; color: #2e7d32;">✓ 自動扣款已啟用</div>
-                    <div style="font-size: 12px; color: #666; margin-top: 5px;">每月5日自動從綁定帳戶扣款</div>
-                </div>
+            
+            <div style="background: #f0f9ff; padding: 15px; border-radius: 10px; margin-bottom: 20px; text-align: center;">
+                <div style="font-size: 14px; color: #666; margin-bottom: 5px;">本月總費用</div>
+                <div style="font-size: 28px; font-weight: bold; color: #667eea;">NT$ 28,500</div>
+                <div style="font-size: 13px; color: #22c55e; margin-top: 5px;">✓ 已繳清</div>
+            </div>
+            
+            <h3 style="margin-bottom: 15px; font-size: 16px;">費用明細</h3>
+            
+            <div class="fee-item">
+                <div class="info-label">基本月費</div>
+                <div class="info-value">NT$ 15,000</div>
+            </div>
+            <div class="fee-item">
+                <div class="info-label">醫療服務費</div>
+                <div class="info-value">NT$ 5,200</div>
+            </div>
+            <div class="fee-item">
+                <div class="info-label">理療按摩</div>
+                <div class="info-value">NT$ 3,800</div>
+            </div>
+            <div class="fee-item">
+                <div class="info-label">活動費用</div>
+                <div class="info-value">NT$ 2,500</div>
+            </div>
+            <div class="fee-item">
+                <div class="info-label">餐飲費用</div>
+                <div class="info-value">NT$ 2,000</div>
+            </div>
+            
+            <div style="background: #f0f9ff; padding: 15px; border-radius: 10px; margin-top: 20px; text-align: center;">
+                <div style="font-size: 13px; color: #666;">✓ 自動扣款已啟用</div>
+                <div style="font-size: 12px; color: #999; margin-top: 5px;">每月5日自動從綁定帳戶扣款</div>
             </div>
         </div>
     </div>
     
-    <!-- 專屬管家彈窗 -->
-    <div id="butlerModal" class="modal">
+    <!-- 專屬管家模態框 -->
+    <div class="modal" id="butler-modal">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="modal-title">🎩 專屬管家</div>
-                <button class="close-btn" onclick="closeModal('butler')">&times;</button>
+                <button class="close-btn" onclick="closeModal('butler-modal')">×</button>
             </div>
-            <div class="modal-body">
-                <div class="contact-card">
-                    <div class="contact-name">👨‍💼 李管家</div>
-                    <div class="contact-info">📞 專線：02-2345-6789</div>
-                    <div class="contact-info">📱 手機：0920-123-456</div>
-                    <div class="contact-info">⏰ 服務時間：24小時全天候</div>
-                    <button class="call-btn" onclick="alert('撥打給李管家')">📞 立即聯絡</button>
+            
+            <div class="contact-card">
+                <div class="contact-name">👨‍💼 李管家</div>
+                <div class="contact-details">
+                    📞 專線：02-2345-6789<br>
+                    📱 手機：0920-123-456<br>
+                    ⏰ 服務時間：24小時全天候
                 </div>
-                <div style="margin-top: 15px; padding: 15px; background: #FFF9F0; border-radius: 8px;">
-                    <div style="font-size: 14px; font-weight: 600; margin-bottom: 8px;">服務內容</div>
-                    <div style="font-size: 13px; color: #666; line-height: 1.6;">
-                        • 24小時隨時待命<br>
-                        • 協助預約各項服務<br>
-                        • 緊急事件即時處理<br>
-                        • 個人化需求安排<br>
-                        • 家屬聯絡協調
-                    </div>
-                </div>
+                <button class="contact-btn" onclick="alert('正在撥打電話...')">📞 立即聯絡</button>
+            </div>
+            
+            <h3 style="margin: 20px 0 15px; font-size: 16px;">服務內容</h3>
+            <div style="background: #f8f9ff; padding: 15px; border-radius: 10px; line-height: 1.8; font-size: 14px; color: #666;">
+                • 24小時隨時待命<br>
+                • 協助預約各項服務<br>
+                • 緊急事件即時處理<br>
+                • 個人化需求安排<br>
+                • 家屬聯絡協調
             </div>
         </div>
     </div>
     
-    <!-- 緊急聯絡人彈窗 -->
-    <div id="emergencyModal" class="modal">
+    <!-- 緊急聯絡人模態框 -->
+    <div class="modal" id="emergency-contact-modal">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="modal-title">🚨 緊急聯絡人</div>
-                <button class="close-btn" onclick="closeModal('emergency')">&times;</button>
+                <button class="close-btn" onclick="closeModal('emergency-contact-modal')">×</button>
             </div>
-            <div class="modal-body">
-                <div class="contact-card">
-                    <div class="contact-name">王小明（兒子）</div>
-                    <div class="contact-info">📱 手機：0912-345-678</div>
-                    <div class="contact-info">💼 公司：0227-654-321</div>
-                    <div class="contact-info">🏠 地址：台北市信義區...</div>
-                    <button class="call-btn" onclick="alert('撥打給王小明')">📞 立即聯絡</button>
+            
+            <div class="contact-card">
+                <div class="contact-name">王小明（兒子）</div>
+                <div class="contact-details">
+                    📱 手機：0912-345-678<br>
+                    💼 公司：0227-654-321<br>
+                    🏠 地址：台北市信義區...
                 </div>
-                
-                <div class="contact-card">
-                    <div class="contact-name">王小華（女兒）</div>
-                    <div class="contact-info">📱 手機：0923-456-789</div>
-                    <div class="contact-info">💼 公司：0228-765-432</div>
-                    <div class="contact-info">🏠 地址：新北市板橋區...</div>
-                    <button class="call-btn" onclick="alert('撥打給王小華')">📞 立即聯絡</button>
+                <button class="contact-btn" onclick="alert('正在撥打電話...')">📞 立即聯絡</button>
+            </div>
+            
+            <div class="contact-card">
+                <div class="contact-name">王小華（女兒）</div>
+                <div class="contact-details">
+                    📱 手機：0923-456-789<br>
+                    💼 公司：0228-765-432<br>
+                    🏠 地址：新北市板橋區...
                 </div>
-                
-                <div style="margin-top: 15px; padding: 15px; background: #FFEBEE; border-radius: 8px;">
-                    <div style="font-size: 14px; font-weight: 600; color: #c62828; margin-bottom: 5px;">緊急服務</div>
-                    <div style="font-size: 13px; color: #666;">
-                        遇到緊急情況請按首頁的緊急呼叫按鈕，或直接聯絡專屬管家
-                    </div>
-                </div>
+                <button class="contact-btn" onclick="alert('正在撥打電話...')">📞 立即聯絡</button>
+            </div>
+            
+            <div style="background: #fff3cd; padding: 15px; border-radius: 10px; margin-top: 20px; text-align: center; font-size: 13px; color: #856404;">
+                <strong>緊急服務</strong><br>
+                遇到緊急情況請按首頁的緊急呼叫按鈕，或直接聯絡專屬管家
             </div>
         </div>
     </div>
     
     <script>
-        // Service Worker 註冊
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('service-worker.js')
-                .then(reg => console.log('Service Worker 已註冊'))
-                .catch(err => console.log('Service Worker 註冊失敗:', err));
-        }
-        
-        // 標籤切換
-        function switchTab(tab) {
-            // 隱藏所有內容
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.add('hidden');
+        // 頁面切換
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
             });
+            document.getElementById(pageId).classList.add('active');
             
-            // 移除所有標籤的active類
-            document.querySelectorAll('.tab-item').forEach(item => {
+            document.querySelectorAll('.nav-item').forEach(item => {
                 item.classList.remove('active');
             });
-            
-            // 顯示選中的內容
-            document.getElementById(tab + 'Tab').classList.remove('hidden');
-            
-            // 為選中的標籤添加active類
             event.currentTarget.classList.add('active');
         }
         
-        // 打開彈窗
-        function openModal(modalName) {
-            const modal = document.getElementById(modalName + 'Modal');
-            if (modal) {
-                modal.classList.add('show');
-            }
+        // 模態框控制
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
         }
         
-        // 關閉彈窗
-        function closeModal(modalName) {
-            const modal = document.getElementById(modalName + 'Modal');
-            if (modal) {
-                modal.classList.remove('show');
-            }
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
         }
         
-        // 點擊彈窗背景關閉
+        // 點擊模態框背景關閉
         document.querySelectorAll('.modal').forEach(modal => {
             modal.addEventListener('click', function(e) {
                 if (e.target === this) {
-                    this.classList.remove('show');
+                    this.classList.remove('active');
                 }
             });
         });
+        
+        // 註冊 Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/slcc/service-worker.js')
+                    .then(registration => {
+                        console.log('Service Worker 註冊成功:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('Service Worker 註冊失敗:', error);
+                    });
+            });
+        }
     </script>
 </body>
 </html>
