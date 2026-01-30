@@ -1,39 +1,43 @@
 {
-  "name": "SLLCC 養老社區會員服務",
-  "short_name": "SLLCC",
-  "description": "SLLCC 養老社區專屬會員服務平台",
-  "start_url": "/",
+  "name": "SLCC 養老社區會員服務",
+  "short_name": "SLCC",
+  "description": "SLCC 養老社區會員服務應用程序",
+  "start_url": "/slcc/",
+  "scope": "/slcc/",
   "display": "standalone",
-  "background_color": "#8B7355",
-  "theme_color": "#8B7355",
+  "background_color": "#ffffff",
+  "theme_color": "#8b5cf6",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "/slcc/icon-152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/slcc/icon-167.png",
+      "sizes": "167x167",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/slcc/icon-180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/slcc/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "icon-512.png",
+      "src": "/slcc/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
-    },
-    {
-      "src": "icon-152.png",
-      "sizes": "152x152",
-      "type": "image/png"
-    },
-    {
-      "src": "icon-167.png",
-      "sizes": "167x167",
-      "type": "image/png"
-    },
-    {
-      "src": "icon-180.png",
-      "sizes": "180x180",
-      "type": "image/png"
     }
   ]
 }
