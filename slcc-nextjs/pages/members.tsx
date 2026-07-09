@@ -32,12 +32,13 @@ export default function MembersPage() {
         { key: 'member_no',     label: 'Member No.',  required: true, placeholder: 'M-0001' },
         { key: 'name_zh',       label: '姓名',        required: true },
         { key: 'name_en',       label: 'Name (EN)',   required: true },
-        { key: 'gender',        label: 'Gender',      type: 'select', options: ['Male', 'Female', 'Other'] },
+        { key: 'gender',        label: 'Gender',      type: 'select', options: ['male', 'female', 'other'] },
         { key: 'date_of_birth', label: 'Date of Birth', type: 'date' },
         { key: 'phone',         label: 'Phone' },
         { key: 'email',         label: 'Email' },
         { key: 'nationality',   label: 'Nationality' },
-        { key: 'status',        label: 'Status', type: 'select', options: ['active', 'inactive', 'pending'] },
+        { key: 'status',        label: 'Status', type: 'select', options: ['active', 'inactive', 'pending', 'suspended', 'deceased'] },
+        { key: 'care_level',    label: 'Care Level', type: 'select', options: ['independent', 'assisted', 'memory_care', 'skilled_nursing'] },
       ]}
     />
   )
