@@ -9,7 +9,10 @@ export default function StaffPage() {
       subtitle="slcc_staff — Care center personnel"
       orderBy="created_at"
       columns={[
-        { key: 'id',          label: 'ID',       render: v => <span className="font-mono text-xs text-slate-500">{String(v).slice(0,8)}…</span> },
+        { key: 'id',          label: 'ID',        render: v => <span className="font-mono text-xs text-slate-500">{String(v).slice(0,8)}…</span> },
+        { key: 'employee_no', label: 'Employee No.' },
+        { key: 'full_name',   label: 'Full Name' },
+        { key: 'email',       label: 'Email' },
         { key: 'staff_no',    label: 'Staff No.' },
         { key: 'name_zh',     label: '姓名' },
         { key: 'name_en',     label: 'Name (EN)' },
@@ -17,13 +20,16 @@ export default function StaffPage() {
         { key: 'department',  label: 'Dept' },
         { key: 'license_no',  label: 'License No.' },
         { key: 'phone',       label: 'Phone' },
-        { key: 'status',      label: 'Status',   render: v => <span className={`badge ${v === 'active' ? 'badge-active' : 'badge-inactive'}`}>{String(v)}</span> },
+        { key: 'status',      label: 'Status',    render: v => <span className={`badge ${v === 'active' ? 'badge-active' : 'badge-inactive'}`}>{String(v)}</span> },
       ]}
       fields={[
-        { key: 'staff_no',    label: 'Staff No.', required: true, placeholder: 'S-0001' },
-        { key: 'name_zh',     label: '姓名', required: true },
-        { key: 'name_en',     label: 'Name (EN)', required: true },
-        { key: 'role',        label: 'Role', placeholder: 'e.g. nurse, caregiver, administrator' },
+        { key: 'employee_no', label: 'Employee No.', required: true, placeholder: 'E-0001' },
+        { key: 'full_name',   label: 'Full Name',    required: true, placeholder: 'Legal full name (required by system)' },
+        { key: 'email',       label: 'Email',        required: true },
+        { key: 'staff_no',    label: 'Staff No. (optional)', placeholder: 'S-0001' },
+        { key: 'name_zh',     label: '姓名 (optional)' },
+        { key: 'name_en',     label: 'Name (EN, optional)' },
+        { key: 'role',        label: 'Role', placeholder: 'e.g. nurse, caregiver, administrator (defaults to "staff")' },
         { key: 'department',  label: 'Department' },
         { key: 'license_no',  label: 'License No.' },
         { key: 'phone',       label: 'Phone' },
