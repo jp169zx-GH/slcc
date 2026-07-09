@@ -30,13 +30,14 @@ export default function MembersPage() {
       ]}
       fields={[
         { key: 'member_no',     label: 'Member No.',  required: true, placeholder: 'M-0001' },
-        { key: 'name_zh',       label: '姓名',        required: true },
-        { key: 'name_en',       label: 'Name (EN)',   required: true },
-        { key: 'gender',        label: 'Gender',      type: 'select', options: ['male', 'female', 'other'] },
-        { key: 'date_of_birth', label: 'Date of Birth', type: 'date' },
+        { key: 'full_name',     label: 'Full Name',   required: true, placeholder: 'Legal full name (required by system)' },
+        { key: 'name_zh',       label: '姓名 (optional)' },
+        { key: 'name_en',       label: 'Name (EN, optional)' },
+        { key: 'date_of_birth', label: 'Date of Birth', type: 'date', required: true },
+        { key: 'gender',        label: 'Gender',      type: 'select', options: ['male', 'female', 'other'], required: true },
         { key: 'phone',         label: 'Phone' },
         { key: 'email',         label: 'Email' },
-        { key: 'nationality',   label: 'Nationality' },
+        { key: 'nationality',   label: 'Nationality', placeholder: 'Defaults to Taiwan if left blank' },
         { key: 'status',        label: 'Status', type: 'select', options: ['active', 'inactive', 'pending', 'suspended', 'deceased'] },
         { key: 'care_level',    label: 'Care Level', type: 'select', options: ['independent', 'assisted', 'memory_care', 'skilled_nursing'] },
       ]}
