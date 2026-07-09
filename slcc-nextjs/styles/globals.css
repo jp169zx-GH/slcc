@@ -39,6 +39,13 @@ body {
 .badge-pending  { @apply bg-amber-500/20 text-amber-400; }
 .badge-critical { @apply bg-red-500/20 text-red-400; }
 
+/* Form inputs (used in AddRecordModal) */
+.form-input {
+  @apply w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-100
+         placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500
+         transition-colors;
+}
+
 /* Card */
 .card {
   @apply bg-slate-900 border border-slate-800 rounded-xl p-6;
