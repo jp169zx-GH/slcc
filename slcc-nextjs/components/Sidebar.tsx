@@ -3,8 +3,9 @@ import { useRouter } from 'next/router'
 import {
   LayoutDashboard, Users, CreditCard, HeartPulse,
   Stethoscope, CalendarCheck, Receipt, ShieldCheck,
-  Cpu, Activity, UserCog, Building2, Settings, ChevronRight
+  Cpu, Activity, UserCog, Building2, Settings, ChevronRight, LogOut
 } from 'lucide-react'
+import { useAuth } from '../lib/auth-context'
 
 const navGroups = [
   {
@@ -60,6 +61,12 @@ const navGroups = [
 
 export default function Sidebar() {
   const router = useRouter()
+  const { session, signOut } = useAuth()
+
+  const handleSignOut = async () => {
+    await signOut()
+    router.replace('/login')
+  }
 
   return (
     <aside className="w-64 min-h-screen bg-slate-950 border-r border-slate-800 flex flex-col shrink-0">
@@ -111,8 +118,18 @@ export default function Sidebar() {
 
       {/* Footer */}
       <div className="px-6 py-4 border-t border-slate-800">
-        <p className="text-[11px] text-slate-600">Supabase: txvyplfaaisrzbwpoqcd</p>
+        <p className="text-[11px] text-slate-600 mb-2">Supabase: txvyplfaaisrzbwpoqcd</p>
+        {session?.user?.email && (
+          <p className="text-[11px] text-slate-500 mb-2 truncate">{session.user.email}</p>
+        )}
+        <button
+          onClick={handleSignOut}
+          className="flex items-center gap-2 text-xs text-slate-500 hover:text-red-400 transition-colors"
+        >
+          <LogOut size={13} /> Sign Out
+        </button>
       </div>
     </aside>
   )
 }
+
