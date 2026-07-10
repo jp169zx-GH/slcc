@@ -20,7 +20,7 @@ export default function HealthRecordsPage() {
       ]}
       fields={[
         { key: 'member_id',   label: 'Member ID (UUID)', required: true, placeholder: 'Paste member id from Members tab' },
-        { key: 'record_type', label: 'Record Type', placeholder: 'e.g. checkup, vitals, diagnosis' },
+        { key: 'record_type', label: 'Type' },
         { key: 'diagnosis',   label: 'Diagnosis', type: 'textarea' },
         { key: 'blood_type',  label: 'Blood Type', placeholder: 'e.g. O+' },
         { key: 'allergies',   label: 'Allergies', type: 'textarea' },
