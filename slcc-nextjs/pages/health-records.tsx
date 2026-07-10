@@ -11,7 +11,7 @@ export default function HealthRecordsPage() {
       columns={[
         { key: 'id',          label: 'ID',          render: v => <span className="font-mono text-xs text-slate-500">{String(v).slice(0,8)}…</span> },
         { key: 'member_id',   label: 'Member ID',   render: v => <span className="font-mono text-xs text-slate-500">{String(v).slice(0,8)}…</span> },
-        { key: 'record_type', label: 'Record Type', required: true, placeholder: 'e.g. checkup, vitals, diagnosis' },
+        { key: 'record_type', label: 'Type' },
         { key: 'diagnosis',   label: 'Diagnosis' },
         { key: 'blood_type',  label: 'Blood Type' },
         { key: 'allergies',   label: 'Allergies' },
