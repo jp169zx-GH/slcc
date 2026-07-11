@@ -15,6 +15,8 @@ interface GenericTablePageProps {
   columns: {
     key: string
     label: string
+    required?: boolean
+    placeholder?: string
     render?: (v: unknown, row: Record<string, unknown>) => React.ReactNode
   }[]
   orderBy?: string
@@ -71,7 +73,6 @@ export function GenericTablePage({ title, tableName, subtitle, columns, orderBy 
           onRefresh={() => fetchData(page)}
         />
       </div>
-
       {showAddModal && fields && (
         <AddRecordModal
           title={title.replace(/s$/, '')}
