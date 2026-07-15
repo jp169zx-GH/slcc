@@ -5,10 +5,15 @@ import { supabase } from '../lib/supabase'
 export interface FormField {
   key: string
   label: string
-  type?: 'text' | 'textarea' | 'number' | 'date' | 'datetime-local' | 'select' | 'checkbox' | 'json'
+  type?: 'text' | 'textarea' | 'number' | 'date' | 'datetime-local' | 'select' | 'checkbox' | 'json' | 'lookup'
   options?: string[]       // for type: 'select'
   required?: boolean
   placeholder?: string
+  // for type: 'lookup' — lets the user type a readable code (e.g. member_no "F0003")
+  // and resolves it to the actual UUID foreign key before insert.
+  lookupTable?: string       // table to search, e.g. TABLES.MEMBERS
+  lookupBy?: string          // readable column to match on, e.g. 'member_no'
+  lookupValueKey?: string    // column to store instead (defaults to 'id')
 }
 
 interface AddRecordModalProps {
@@ -47,6 +52,28 @@ export default function AddRecordModal({ title, tableName, fields, onClose, onSu
           setSaving(false)
           return
         }
+        continue
+      }
+
+      if (f.type === 'lookup' && f.lookupTable && f.lookupBy) {
+        const valueKey = f.lookupValueKey ?? 'id'
+        const { data: match, error: lookupErr } = await supabase
+          .from(f.lookupTable)
+          .select(valueKey)
+          .eq(f.lookupBy, String(v).trim())
+          .maybeSingle()
+
+        if (lookupErr) {
+          setError(`Lookup failed for "${f.label}": ${lookupErr.message}`)
+          setSaving(false)
+          return
+        }
+        if (!match) {
+          setError(`No match found for "${f.label}" = "${v}". Check the code and try again.`)
+          setSaving(false)
+          return
+        }
+        payload[f.key] = (match as unknown as Record<string, unknown>)[valueKey]
         continue
       }
 
@@ -113,6 +140,15 @@ export default function AddRecordModal({ title, tableName, fields, onClose, onSu
                     <option key={opt} value={opt}>{opt}</option>
                   ))}
                 </select>
+              ) : f.type === 'lookup' ? (
+                <input
+                  type="text"
+                  required={f.required}
+                  placeholder={f.placeholder}
+                  className="form-input"
+                  value={String(values[f.key] ?? '')}
+                  onChange={e => setField(f.key, e.target.value)}
+                />
               ) : f.type === 'checkbox' ? (
                 <input
                   type="checkbox"
